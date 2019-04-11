@@ -27,8 +27,17 @@ contract CmsTest is DSTest {
     function test_register() public {
         address proposal = address(0x0);
         string memory content = "QmQxsTs6hppWktJhakDEDyDdMfjdsskSRM7qEQMMKWbvV1";
+
         cms.register(proposal, content);
 
         assertEq0(bytes(cms.proposals(proposal)), bytes(content));
+    }
+
+    function testFail_double_register() public {
+        address proposal = address(0x0);
+        string memory content = "QmQxsTs6hppWktJhakDEDyDdMfjdsskSRM7qEQMMKWbvV1";
+
+        cms.register(proposal, content);
+        cms.register(proposal, content);
     }
 }

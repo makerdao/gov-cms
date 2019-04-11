@@ -19,7 +19,12 @@ contract Cms {
     event Proposal(address proposal, string content);
 
     function register(address proposal, string memory content) public {
+        require(empty(proposals[proposal]), "cms-cannot-update-existing-content");
         proposals[proposal] = content;
         emit Proposal(proposal, content);
+    }
+
+    function empty(string memory str) public pure returns (bool) {
+        return keccak256(abi.encodePacked((str))) == keccak256(abi.encodePacked(("")));
     }
 }
